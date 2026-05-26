@@ -1,9 +1,15 @@
 from tap import Tap
 
-class CLIArgs(Tap):
+RAGSTASH_MODES = ["init", "serve", "get", "help", "status"]
+RAGSTASH_USAGE_GET = "ragstash get <QUERY> [--args ...]"
+RAGSTASH_USAGE_PATH = "ragstash %(MODE) <PATH> [--args ...]"
+
+class CliArgs(Tap):
+    """  """
     mode: str
     arg1: str
 
+    # set from arg1
     path: str = ""
     query: str = ""
 
@@ -20,6 +26,8 @@ class CLIArgs(Tap):
     retrieval_query: str
     message: str = ""
     load_vault: str = ""
+    file: str = ""
+    ip_addr: str = "0.0.0.0" # if server exists not on localhost
 
     # init serve
     name: str = ""
@@ -42,16 +50,25 @@ class CLIArgs(Tap):
         self.check_arg1()
 
     def check_mode(self):
-        modes = ["init", "serve", "get", "help", "status"]
-        if self.mode not in modes:
-            print(f"no such mode \"{self.mode}\", available modes are: {modes}")
-            import sys
-            sys.exit(1)
-        if self.mode in ["get"]:
-            self.query = self.arg1
-        else:
-            self.path = self.arg1
-        del self.arg1
+        if self.mode not in RAGSTASH_MODES:
+            self._exit(f"no such mode \"{self.mode}\", available modes are: {RAGSTASH_MODES}", 1)
 
     def check_arg1(self):
-        ...
+        if self.mode in ["get"]:
+            if self.arg1 is None:
+                self._exit(f"Please give a query (usage: {RAGSTASH_USAGE_GET}", 1)
+            self.query = self.arg1
+            del self.arg1
+        else:
+            if self.arg1 is None:
+                usage = RAGSTASH_USAGE_PATH.replace("%(MODE)", self.mode)
+                self._exit(f"Please give path to vault (usage: {usage}", 1)
+            self.path = self.arg1
+            del self.arg1
+
+    @staticmethod
+    def _exit(msg="", status_code=0):
+        import sys
+        if msg != "":
+            print(msg)
+        sys.exit(status_code)

@@ -1,8 +1,13 @@
 # Notes
 
 ## Publishing workflow
+
 uv build          # produces dist/
 uv publish        # uploads to PyPI (uses ~/.pypi token or env var)
+
+## Tap idiosyncracy
+
+For multi-word arguments where you also use .add_argument() and use dash (-) as separator, use `default=""` to prevent it being required.
 
 ## Files
 
