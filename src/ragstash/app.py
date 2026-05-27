@@ -64,9 +64,9 @@ def get(args: CliArgs):
     params = {
         "query": args.query,
         "k": args.chunks,
+        "retrieval_query": args.retrieval_query,
+        "message": args.message,
     }
-    if args.retrieval_query != "":
-        params["retrieval_query"] = args.retrieval_query
     r = requests.post(
         f"http://localhost:{args.port}/rag",
         json=params,
@@ -83,11 +83,15 @@ def get(args: CliArgs):
 def serve(args: CliArgs):
     from ragstash.rag_vault import RagVault
     from ragstash.flask_server import create_server
+
+    # load
     vault = RagVault(args.path, name=args.name)
     print('loading vault')
     vault.load()
     print('creating server')
     server = create_server(vault)
+
+    # run
     try:
         print(f"serving ragstash on: http://localhost:{args.port}")
         server.run(port=args.port)

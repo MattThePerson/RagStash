@@ -39,6 +39,11 @@ class CliArgs(Tap):
         self.add_argument("mode", help="mode of operation [init|serve|get|help]")
         self.add_argument("arg1", nargs="?", help="Path (init|serve) or Query (get)")
 
+        # init
+        self.add_argument("--sentence-transformer", default="sentence-transformers/all-MiniLM-L6-v2", help="")
+        self.add_argument("--chunk-size", type=int, default=500, help="")
+        self.add_argument("--chunk-overlap", type=int, default=50, help="")
+
         self.add_argument("--port",                     help="RAG Stash server port")
         self.add_argument("--name", "-n",               help="Give name to vault")
         self.add_argument("--load-vault", default="",   help="Path to vault to load directly (without serve)")

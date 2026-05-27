@@ -41,6 +41,8 @@ class RagVault:
         message: str=HEADER_MESSAGE,
     ) -> str:
         """  """
+        if message == "":
+            message = HEADER_MESSAGE
         if self.conn is None:
             raise Exception("vault not loaded")
         if retrieval_query == "":
