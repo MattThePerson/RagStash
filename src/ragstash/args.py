@@ -1,6 +1,6 @@
 from tap import Tap
 
-RAGSTASH_MODES = ["init", "serve", "get", "help", "status"]
+RAGSTASH_MODES = ["init", "update", "serve", "get", "info", "help"]
 RAGSTASH_USAGE_GET = "ragstash get <QUERY> [--args ...]"
 RAGSTASH_USAGE_PATH = "ragstash %(MODE) <PATH> [--args ...]"
 
@@ -15,7 +15,7 @@ class CliArgs(Tap):
 
     # init
     sentence_transformer: str = "sentence-transformers/all-MiniLM-L6-v2"
-    chunk_size: int = 400
+    chunk_size: int = 500
     chunk_overlap: int = 50
 
     # serve
@@ -61,8 +61,9 @@ class CliArgs(Tap):
             del self.arg1
         else:
             if self.arg1 is None:
-                usage = RAGSTASH_USAGE_PATH.replace("%(MODE)", self.mode)
-                self._exit(f"Please give path to vault (usage: {usage}", 1)
+                self.arg1 = "."
+                # usage = RAGSTASH_USAGE_PATH.replace("%(MODE)", self.mode)
+                # self._exit(f"Please give path to vault (usage: {usage}", 1)
             self.path = self.arg1
             del self.arg1
 

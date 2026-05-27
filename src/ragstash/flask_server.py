@@ -9,16 +9,15 @@ def create_server(vault: RagVault):
     _vault = vault
     return server
 
-@server.route("/rag")
+@server.route("/rag", methods=["POST"])
 def rag():
-    query = request.args.get("q", "")
-    print(query)
+    query = request.json.get("query", "")
+    k = int(request.json.get("k", 5))
+    rquery = request.json.get("retrieval_query", "")
+    msg = _vault.getRAGMessage(
+        query=query,
+        k=k,
+        retrieval_query=rquery,
+    )
 
-    context = f"""
-heading:
-THIS IS AN EXAMPLE CONTEXT STRING
-
-query:
-{query}
-"""
-    return context, 200, {"Content-Type": "text/plain"}
+    return msg, 200, {"Content-Type": "text/plain"}
