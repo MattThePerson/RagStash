@@ -1,4 +1,5 @@
 from tap import Tap
+from importlib.metadata import version
 
 RAGSTASH_MODES = ["init", "update", "serve", "get", "info", "help"]
 RAGSTASH_USAGE_GET = "ragstash get <QUERY> [--args ...]"
@@ -40,6 +41,8 @@ class CliArgs(Tap):
         self.add_argument("mode", help="mode of operation [init|serve|get|help]")
         self.add_argument("arg1", nargs="?", help="Path (init|serve) or Query (get)")
 
+        self.add_argument( "--version", "-V", action="version", version=f"%(prog)s {version('ragstash')}")
+
         # init
         self.add_argument("--sentence-transformer", default="sentence-transformers/all-MiniLM-L6-v2", help="")
         self.add_argument("--chunk-size", type=int, default=500, help="")
@@ -62,6 +65,9 @@ class CliArgs(Tap):
 
     def check(self):
         self.mode = self.mode.lower()
+        if self.mode == "help":
+            self.print_help()
+            self.exit()
         self.check_mode()
         self.check_arg1()
 

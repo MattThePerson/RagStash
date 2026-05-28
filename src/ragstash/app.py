@@ -11,13 +11,14 @@ def main():
         case "init":
             init(args)
         case "update":
+            raise NotImplementedError("'update' mode not yet implemented")
             update(args)
         case "serve":
             serve(args)
         case "get":
             get(args)
         case _:
-            raise Exception(f"bro, no such mode: '{args.mode}'")
+            raise NotImplementedError(f"mode not implemented: '{args.mode}'")
 
 # ====================================================================================================
 # Init
@@ -48,8 +49,8 @@ def init(args: CliArgs):
 # ====================================================================================================
 
 def update(args: CliArgs):
-    from ragstash.rag_vault import RagVault
-    from ragstash import docs
+    # from ragstash.rag_vault import RagVault
+    # from ragstash import docs
     ...
 
 # ====================================================================================================

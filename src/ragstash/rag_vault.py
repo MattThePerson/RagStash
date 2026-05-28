@@ -63,6 +63,8 @@ class RagVault:
 
         if len(docs) == 0:
             print("cannot init with 0 documents")
+            import sys
+            sys.exit(1)
 
         # check exists
         if self.exists():

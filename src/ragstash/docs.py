@@ -19,14 +19,18 @@ def readFiles(path: str):
     for _file in getFilesByExtension(path, "txt"):
         content = getFileContent_txt(_file)
         texts.append(content)
-        # metadatas.append({"filename": str(_file)})
+        filenames.append(str(_file))
+
+    # md
+    for _file in getFilesByExtension(path, "md"):
+        content = getFileContent_txt(_file)
+        texts.append(content)
         filenames.append(str(_file))
 
     # pdf
     for _file in getFilesByExtension(path, "pdf"):
         content = getFileContent_pdf(_file)
         texts.append(content)
-        # metadatas.append({"filename": str(_file)})
         filenames.append(str(_file))
 
     return texts, filenames

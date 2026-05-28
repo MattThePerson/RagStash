@@ -4,9 +4,11 @@ _Perform RAG flexibly and easily with an LLM of your choice_
 
 ## About
 
-Ragstash is a CLI utility to help retrieve RAG (Retrieval Augmented Generation) context from your documents which can then be fed into an LLM of your choice.
+Ragstash is a CLI utility to help retrieve RAG (Retrieval Augmented Generation) context from your documents which can then be fed into an LLM of your choice. It is a simple tool meant to be integrated into your RAG workflow. You could even ask a local LLM (that you trust) to fetch RAG context by using the tool itself while a server is running.
 
 ## Installation
+
+Available on [PyPI](https://pypi.org/project/ragstash/)
 
 __recommended:__
 
@@ -18,18 +20,18 @@ You should then have `ragstash` command available.
 
 First, cd into your documents folder, then: 
 
-1. Use `ragstash init .` to initialize (processes documents, generates embeddings, and saves vector db)
-2. Use `ragstash serve .` to start the server used for querying
-3. (_In a separate terminal_) Use `ragstash get YOUR_QUERY` to print out the RAG context. This output can be piped (|) into an LLM or saved in a file.
+1. Use `ragstash init` to initialize (processes documents, generates embeddings, and saves vector db)
+2. Use `ragstash serve` to start the server used for querying
+3. (_In a separate terminal_) Use `ragstash get <QUERY>` to print out the RAG context. This output can be piped (|) into an LLM or saved in a file.
 
-## Example Usage
+### Example Usage
 
 __Simple__:
 
 ```sh
 > cd path/to/your/documents
-> ragstash init .
-> ragstash serve .
+> ragstash init
+> ragstash serve
 
 # In another terminal
 > ragstash get "What do the leaked files say about the doings of Celebrity Celebface?" | claude
@@ -39,11 +41,11 @@ __Advanced__:
 
 ```sh
 > cd path/to/your/documents
-> ragstash init . \
+> ragstash init \
   --sentence-transformer "sentence-transformers/all-MiniLM-L6-v2" \
   --chunk-size 1000 \
   --name "LargeChunks"
-> ragstash serve . --name "LargeChunks"
+> ragstash serve --name "LargeChunks"
 
 # In another terminal
 > ragstash get "What do the leaked files say about the doings of Celebrity Celebface?" \
@@ -82,3 +84,7 @@ __Advanced__:
     --name                  # name of vault
 
 ```
+
+## Upcoming features
+
+- `update` mode so that you can add or update documents and only scan the changes.
