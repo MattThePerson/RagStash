@@ -49,7 +49,7 @@ __Advanced__:
 > ragstash get "What do the leaked files say about the doings of Celebrity Celebface?" \
   --retrieval-query "Things Celebrity Celebface has done" \
   --chunks 10 \
-  --message "Here is " \
+  --message "I am doing RAG, here are some chunks of info ^^" \
   | claude
 ```
 
@@ -60,7 +60,7 @@ __Advanced__:
 > init PTH
     --sentence-transformer  # model to use for embedding of chunks
     --chunk-size            # size of chunks (chars)
-    --chunk-overlap         # 
+    --chunk-overlap         # overlap of chunks (chars)
     --redo                  # overwrite existing vault
     --name                  # name to give initialization (appended to folder name: ".rag_{NAME}")
 
@@ -73,8 +73,8 @@ __Advanced__:
     --chunks                # number of chunks to fetch
     --retrieval-query       # query to use when doing "dumb" retrieval of data (given to sentence transformer)
     --message               # message to give LLM
-    --port                  # port to fetch 
-    --ip_addr               # default `localhost`
+    --port                  # port to fetch
+    --ip-addr               # default `localhost`
     --chunks-as-json        # instead of getting RAG formatted message, get retireved chunks as json
     --file                  # file where to save retrieved context
 

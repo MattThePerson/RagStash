@@ -68,7 +68,7 @@ def get(args: CliArgs):
         "message": args.message,
     }
     r = requests.post(
-        f"http://localhost:{args.port}/rag",
+        f"http://{args.ip_addr}:{args.port}/rag",
         json=params,
     )
     msg = r.text
@@ -93,8 +93,8 @@ def serve(args: CliArgs):
 
     # run
     try:
-        print(f"serving ragstash on: http://localhost:{args.port}")
-        server.run(port=args.port)
+        print(f"serving ragstash on: http://0.0.0.0:{args.port}")
+        server.run(host="0.0.0.0", port=args.port)
     except KeyboardInterrupt:
         print("\n... closing server")
     finally:
